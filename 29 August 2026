@@ -1,4 +1,4 @@
-lass Solution {
+class Solution {
   public:
     int countSubsequences(string& s, int n) {
         const int MOD = 1000000007;
