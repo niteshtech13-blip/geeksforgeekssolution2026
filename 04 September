@@ -1,16 +1,28 @@
-class Solution:
-    def firstStableIndex(self, nums: list[int], k: int) -> int:
-        n = len(nums)
-        suf = [0] * n
-        suf[-1] = nums[-1]
+class Solution {
+  public:
+    int maxFruits(vector<int>& arr, int m) {
+        int n = arr.size();
+        int k = min(m, n);
 
-        for i in range(n - 2, -1, -1):
-            suf[i] = min(suf[i + 1], nums[i])
+        long long windowSum = 0;
+        
+        for (int i = 0; i < k; i++) {
+            windowSum += arr[i];
+        }
 
-        mx = 0
-        for i, x in enumerate(nums):
-            mx = max(mx, x)
-            if mx - suf[i] <= k:
-                return i
+        long long ans = windowSum;
 
-        return -1
+        for (int start = 1; start < n; start++) {
+            int removed = start - 1;
+            
+            int added = (start + k - 1) % n;
+
+            windowSum -= arr[removed];
+            windowSum += arr[added];
+
+            ans = max(ans, windowSum);
+        }
+
+        return (int)ans;
+    }
+};
